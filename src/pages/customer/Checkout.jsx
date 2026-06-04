@@ -22,6 +22,7 @@ export default function Checkout() {
   const [placing, setPlacing] = useState(false)
   const [mapCoords, setMapCoords] = useState(null)
   const [showMap, setShowMap] = useState(false)
+  const [deliveryZone, setDeliveryZone] = useState(null) // {available, distance, message}
 
   const deliveryFee = totalAmount >= 500 ? 0 : 40
   const finalTotal = totalAmount - (discount || 0) + deliveryFee
@@ -36,9 +37,20 @@ export default function Checkout() {
 
   const handleUseLocation = () => {
     if (!navigator.geolocation) { toast.error('Geolocation not supported'); return }
-    navigator.geolocation.getCurrentPosition(pos => {
-      setMapCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude })
+    navigator.geolocation.getCurrentPosition(async pos => {
+      const coords = { lat: pos.coords.latitude, lng: pos.coords.longitude }
+      setMapCoords(coords)
       setShowMap(true)
+      // Check delivery zone
+      try {
+        const res = await api.post('/orders/check-delivery', coords)
+        setDeliveryZone(res.data)
+        if (!res.data.available) {
+          toast.error(res.data.message, { autoClose: 8000 })
+        } else {
+          toast.success(res.data.message)
+        }
+      } catch (err) {}
     }, () => toast.error('Could not get location'))
   }
 
@@ -60,6 +72,21 @@ export default function Checkout() {
     try {
       const addr = addresses.find(a => a._id === selectedAddress)
       const deliveryAddress = addingNew ? { ...newAddress, coordinates: mapCoords } : addr
+
+      // Check delivery radius
+      const coords = deliveryAddress?.coordinates
+      if (coords?.lat && coords?.lng) {
+        try {
+          const checkRes = await api.post('/orders/check-delivery', { lat: coords.lat, lng: coords.lng })
+          if (!checkRes.data.available) {
+            toast.error(checkRes.data.message, { autoClose: 6000 })
+            setPlacing(false)
+            return
+          }
+        } catch (err) {
+          // If check fails, allow order to proceed
+        }
+      }
 
       if (paymentMethod === 'razorpay') {
         // Check if Razorpay is loaded
@@ -186,6 +213,15 @@ export default function Checkout() {
                   </button>
                   {mapCoords && <span className="text-xs text-green-600 self-center">📍 Location set</span>}
                 </div>
+                {deliveryZone && (
+                  <div className={`flex items-start gap-2 p-3 rounded-xl text-sm ${deliveryZone.available ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300' : 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400'}`}>
+                    <span className="text-lg">{deliveryZone.available ? '✅' : '❌'}</span>
+                    <div>
+                      <p className="font-semibold">{deliveryZone.available ? 'Delivery Available!' : 'Outside Delivery Zone'}</p>
+                      <p className="text-xs mt-0.5">{deliveryZone.message}</p>
+                    </div>
+                  </div>
+                )}
                 {showMap && mapCoords && (
                   <MapPicker coords={mapCoords} onSelect={setMapCoords} />
                 )}
