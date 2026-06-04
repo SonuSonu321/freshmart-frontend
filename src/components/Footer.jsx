@@ -24,7 +24,7 @@ export default function Footer() {
           <h4 className="font-semibold text-white mb-3">Support</h4>
           <ul className="space-y-1.5 text-sm">
             <li><span className="hover:text-green-400 cursor-pointer">FAQ</span></li>
-            <li><span className="hover:text-green-400 cursor-pointer">Return Policy</span></li>
+            <li><Link to="/return-policy" className="hover:text-green-400 transition-colors">Return Policy</Link></li>
             <li><span className="hover:text-green-400 cursor-pointer">Privacy Policy</span></li>
           </ul>
         </div>
@@ -32,7 +32,12 @@ export default function Footer() {
           <h4 className="font-semibold text-white mb-3">Contact</h4>
           <ul className="space-y-1.5 text-sm">
             <li>📧 support@freshmart.com</li>
-            <li>📞 1800-123-4567</li>
+            <li>
+              <a href="tel:+918827858476" className="hover:text-green-400">📞 +91 88278 58476</a>
+            </li>
+            <li>
+              <a href="https://wa.me/918827858476" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">💬 WhatsApp Us</a>
+            </li>
             <li>⏰ 6 AM – 10 PM</li>
           </ul>
         </div>

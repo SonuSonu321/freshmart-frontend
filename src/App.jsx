@@ -22,6 +22,7 @@ import Orders from './pages/customer/Orders'
 import OrderDetail from './pages/customer/OrderDetail'
 import Profile from './pages/customer/Profile'
 import Wishlist from './pages/customer/Wishlist'
+import ReturnPolicy from './pages/customer/ReturnPolicy'
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
 
@@ -93,6 +94,7 @@ export default function App() {
           <Route path="orders/:id" element={<ProtectedRoute><OrderDetail /></ProtectedRoute>} />
           <Route path="profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+          <Route path="return-policy" element={<ReturnPolicy />} />
         </Route>
 
         {/* Admin */}
