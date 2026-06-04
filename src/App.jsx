@@ -37,6 +37,7 @@ import AdminCustomers from './pages/admin/Customers'
 import AdminCategories from './pages/admin/Categories'
 import AdminCoupons from './pages/admin/Coupons'
 import AdminDelivery from './pages/admin/DeliveryPartners'
+import AdminProfile from './pages/admin/AdminProfile'
 
 const ProtectedRoute = ({ children, role }) => {
   const { user, token } = useSelector(s => s.auth)
@@ -103,6 +104,7 @@ export default function App() {
           <Route path="categories" element={<AdminCategories />} />
           <Route path="coupons" element={<AdminCoupons />} />
           <Route path="delivery" element={<AdminDelivery />} />
+          <Route path="profile" element={<AdminProfile />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />

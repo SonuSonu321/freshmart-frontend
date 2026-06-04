@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../store/slices/authSlice'
 import {
   LayoutDashboard, Package, ShoppingCart, Users,
-  Tag, Ticket, Truck, LogOut, Menu, X, Sun, Moon
+  Tag, Ticket, Truck, LogOut, Menu, X, Sun, Moon, UserCog
 } from 'lucide-react'
 import { toggleDarkMode } from '../store/slices/uiSlice'
 
@@ -16,6 +16,7 @@ const navItems = [
   { to: '/admin/categories', icon: Tag, label: 'Categories' },
   { to: '/admin/coupons', icon: Ticket, label: 'Coupons' },
   { to: '/admin/delivery', icon: Truck, label: 'Delivery' },
+  { to: '/admin/profile', icon: UserCog, label: 'My Profile' },
 ]
 
 export default function AdminLayout() {
