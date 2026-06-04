@@ -11,7 +11,7 @@ export default function Cart() {
   const [couponCode, setCouponCode] = useState('')
   const [applying, setApplying] = useState(false)
 
-  const deliveryFee = totalAmount >= 500 ? 0 : items.length > 0 ? 40 : 0
+  const deliveryFee = totalAmount >= 500 ? 0 : items.length > 0 ? 25 : 0
   const finalTotal = totalAmount - (discount || 0) + deliveryFee
 
   const handleApplyCoupon = async () => {

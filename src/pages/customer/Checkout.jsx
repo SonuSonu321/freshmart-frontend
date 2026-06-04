@@ -24,7 +24,7 @@ export default function Checkout() {
   const [showMap, setShowMap] = useState(false)
   const [deliveryZone, setDeliveryZone] = useState(null) // {available, distance, message}
 
-  const deliveryFee = totalAmount >= 500 ? 0 : 40
+  const deliveryFee = totalAmount >= 500 ? 0 : 25
   const finalTotal = totalAmount - (discount || 0) + deliveryFee
 
   useEffect(() => {

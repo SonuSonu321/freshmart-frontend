@@ -12,7 +12,7 @@ export default function CartDrawer() {
   const { user } = useSelector(s => s.auth)
 
   const finalTotal = totalAmount - (discount || 0)
-  const deliveryFee = finalTotal >= 500 ? 0 : finalTotal > 0 ? 40 : 0
+  const deliveryFee = finalTotal >= 500 ? 0 : finalTotal > 0 ? 25 : 0
 
   return (
     <>
